@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -65,12 +66,12 @@ class _LoginForm extends ConsumerWidget {
           const SizedBox(
             height: 50,
           ),
-          Text('Login', style: textStyles.titleLarge),
+          Text('login'.tr(), style: textStyles.titleLarge),
           SizedBox(
             height: 50,
           ),
           CustomTextFormField(
-            label: 'Correo',
+            label: 'email'.tr(),
             keyboardType: TextInputType.emailAddress,
             onChanged: ref.read(loginFormProvider.notifier).onEmailChange,
             errorMessage:
@@ -80,7 +81,7 @@ class _LoginForm extends ConsumerWidget {
             height: 30,
           ),
           CustomTextFormField(
-            label: 'Contraseña',
+            label: 'password'.tr(),
             obscureText: true,
             onChanged: ref.read(loginFormProvider.notifier).onPasswordChange,
             onFieldSummitted: (_) {
@@ -96,7 +97,7 @@ class _LoginForm extends ConsumerWidget {
             width: double.infinity,
             height: 56,
             child: CustomFilledButton(
-              text: 'Ingresar',
+              text: 'accept'.tr(),
               buttonColor: Colors.black87,
               onPressed: loginForm.isPosting
                   ? null
@@ -109,12 +110,12 @@ class _LoginForm extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('¿No tienes cuenta?'),
+              Text('have.account'.tr()),
               TextButton(
                   onPressed: () {
                     context.push('/register');
                   },
-                  child: const Text('Crea una aquí'))
+                  child: Text('singin'.tr()))
             ],
           ),
           const Spacer(

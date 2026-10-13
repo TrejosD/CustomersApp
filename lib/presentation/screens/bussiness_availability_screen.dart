@@ -10,6 +10,7 @@ import 'package:clientes_app/presentation/widgets/appointment_tile.dart';
 import 'package:clientes_app/presentation/widgets/set_appointment_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class BussinessAvailabilityScreen extends ConsumerStatefulWidget {
   final String bussID;
@@ -67,15 +68,7 @@ class _BussinessAvailabilityScreenState
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: ListTile(
-                                  leading: CircleAvatar(
-                                    radius: 30,
-                                    backgroundColor: Colors.white,
-                                    child: Text(
-                                      HumanFormats.getTextDay(
-                                          ava.dayDate.toString()),
-                                      style: TextStyle(fontSize: 18),
-                                    ),
-                                  ),
+                                  leading: IconButton(onPressed: ()=>context.pop(), icon: Icon(Icons.arrow_back_ios, color: Colors.white,)),
                                   tileColor:
                                       const Color.fromARGB(255, 71, 77, 74),
                                   title: Text(
@@ -87,8 +80,16 @@ class _BussinessAvailabilityScreenState
                                     'Fecha: ${HumanFormats.dateHumanFormat(ava.dayDate.toString())}',
                                     style: TextStyle(color: Colors.white),
                                   ),
-                                  trailing: Icon(Icons.arrow_forward_ios)),
-                            ),
+                                  trailing: CircleAvatar(
+                                    radius: 30,
+                                    backgroundColor: Colors.white,
+                                    child: Text(
+                                      HumanFormats.getTextDay(
+                                          ava.dayDate.toString()),
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                  ),
+                            ),),
                             Divider(),
                             Expanded(
                               child: ListView.builder(

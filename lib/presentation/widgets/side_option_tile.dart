@@ -1,4 +1,4 @@
-import 'dart:math';
+
 
 import 'package:flutter/material.dart';
 
@@ -30,9 +30,6 @@ class SideOptionTile extends StatelessWidget {
         Spacer(),
         DropdownMenu(
           menuStyle: MenuStyle(
-            shape: WidgetStatePropertyAll(
-              CircleBorder(side: BorderSide(style: BorderStyle.solid)),
-            ),
           ),
           width: 110,
           initialSelection: initialSelection, //?? 'localeList.1'.tr(),

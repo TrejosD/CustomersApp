@@ -1,12 +1,17 @@
 import 'package:clientes_app/config/router/app_router.dart';
 import 'package:clientes_app/config/tools/human_formats.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   HumanFormats.initLocale();
-  runApp(const ProviderScope(child: MyApp()));
+
+  runApp(EasyLocalization(supportedLocales: [Locale('en', 'US'), Locale('es', 'ES'), Locale('de', 'DE')],fallbackLocale: Locale('en') , path: 'assets/translations', child: const ProviderScope(child: MyApp()),) );
+
+
 }
 
 class MyApp extends ConsumerWidget {
@@ -17,6 +22,9 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final appRouter = ref.watch(appRouterProvider);
     return MaterialApp.router(
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       routerConfig: appRouter,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -35,7 +43,7 @@ class MyApp extends ConsumerWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.black45),
       ),
     );
   }
