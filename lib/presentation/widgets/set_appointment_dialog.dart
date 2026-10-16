@@ -5,6 +5,7 @@ import 'package:clientes_app/domain/entities/space_time_entity.dart';
 import 'package:clientes_app/infrastructure/repositories/appointment_repository_impl.dart';
 import 'package:clientes_app/infrastructure/repositories/availability_repository_impl.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -46,7 +47,7 @@ class _SetAppointmentDialogState extends ConsumerState<SetAppointmentDialog> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Enviar solicitud de espacio'),
+            Text('sentAppointmentRequest'.tr()),
             SizedBox(
               height: 10,
             ),
@@ -64,7 +65,7 @@ class _SetAppointmentDialogState extends ConsumerState<SetAppointmentDialog> {
             ),
             error
                 ? Text(
-                    'Debes Seleccionar un servicio',
+                    'mustSelectAService'.tr(),
                     style: TextStyle(color: Colors.red),
                   )
                 : SizedBox(),
@@ -78,7 +79,7 @@ class _SetAppointmentDialogState extends ConsumerState<SetAppointmentDialog> {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    icon: Text('Cancelar')),
+                    icon: Text('cancel'.tr())),
                 IconButton.filled(
                     onPressed: () async {
                       if (productID.isEmpty || productID.trim().isEmpty) {
@@ -100,38 +101,37 @@ class _SetAppointmentDialogState extends ConsumerState<SetAppointmentDialog> {
                         if (mounted) {
                           Navigator.of(context).pop();
                           showSuccessAlert(
-                              context, 'Cita confirmada exitosamente');
+                              context, 'appointmentRequestSucceed'.tr());
                         }
                       } on DioException catch (e) {
                         String dbMessage = '';
                         if (e.response != null) {
-                          print('ACA TENEMOS EL ERROR');
                           print(e.response!.statusCode);
                           if (e.response!.statusCode == 400) {
-                            dbMessage = 'Espacio para cita no disponible';
+                            dbMessage = 'appointmentWindowNotAvailable'.tr();
                           }
                           if (e.response!.statusCode == 404) {
                             dbMessage =
-                                'Ventana de tiempo insuficiente para el producto seleccionado';
+                                'notEnoughtTimeForAppointment'.tr();
                           }
                           if (e.response!.statusCode == 409) {
                             dbMessage =
-                                'Lo sentimos. Espacio seleccionado ya fue ocupado';
+                                'appointmentSpaceAlreadyTaken'.tr();
                           }
                         }
                         if (mounted) {
                           // mostrarmos alerta, espacio no disponible
                           showAlertError(context,
                               buss: widget.bussiness,
-                              title: 'Espacio ocupado',
+                              title: 'takenSpaceTitle'.tr(),
                               message: '''$dbMessage 
-                                  Por favor, selecciona otro horario''');
+                                  pleaseSelectAnotherSpace'''.tr());
                         } else {
                           if (mounted) {
                             showAlertError(context,
                                 buss: widget.bussiness,
-                                title: 'Error de red',
-                                message: 'Intentalo de nuevo más tarde');
+                                title: 'networkErrorTitle'.tr(),
+                                message: 'tryAgainLater'.tr());
                           }
                         }
                       } catch (e, stacktrace) {
@@ -141,12 +141,12 @@ class _SetAppointmentDialogState extends ConsumerState<SetAppointmentDialog> {
                         if (mounted) {
                           showAlertError(context,
                               buss: widget.bussiness,
-                              title: 'Error',
-                              message: 'Ocurrio un problema inesperado');
+                              title: 'errorTitle'.tr(),
+                              message: 'unexpectedErrorMessage'.tr());
                         }
                       }
                     },
-                    icon: Text('Aceptar'))
+                    icon: Text('accept').tr())
               ],
             )
           ],
@@ -181,8 +181,8 @@ void showAlertError(BuildContext context,
         actions: [
           TextButton(
               onPressed: () => {context.push('/bussiness/ava/${buss.id}')},
-              child: const Text(
-                'Entendido',
+              child: Text(
+                'understandMessage'.tr(),
                 style: TextStyle(color: Colors.red),
               ))
         ],
@@ -206,7 +206,7 @@ void showSuccessAlert(BuildContext context, String message) {
               width: 10,
             ),
             Text(
-              'Todo listo!',
+              'everythingOk'.tr(),
               style: TextStyle(fontWeight: FontWeight.bold),
             )
           ],
@@ -215,8 +215,8 @@ void showSuccessAlert(BuildContext context, String message) {
         actions: [
           TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text(
-                'Aceptar',
+              child: Text(
+                'accept'.tr(),
                 style: TextStyle(color: Colors.green),
               ))
         ],

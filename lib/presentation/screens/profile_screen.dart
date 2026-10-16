@@ -3,6 +3,7 @@
 import 'package:clientes_app/domain/entities/profile_entity.dart';
 import 'package:flutter/material.dart';
 
+//todo esto va a terminar muriendo, no se esta usando
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 

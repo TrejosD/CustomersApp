@@ -8,6 +8,7 @@ import 'package:clientes_app/presentation/providers/current_user_appointment_pro
 import 'package:clientes_app/presentation/providers/logged_user_id_provider.dart';
 import 'package:clientes_app/presentation/widgets/appointment_tile.dart';
 import 'package:clientes_app/presentation/widgets/set_appointment_dialog.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -76,8 +77,9 @@ class _BussinessAvailabilityScreenState
                                     style: TextStyle(
                                         fontSize: 19, color: Colors.white),
                                   ),
+                                  // todo, ver como funciona la variable entre el texto con easyLocation
                                   subtitle: Text(
-                                    'Fecha: ${HumanFormats.dateHumanFormat(ava.dayDate.toString())}',
+                                    'date: ${HumanFormats.dateHumanFormat(ava.dayDate.toString())}'.tr(),
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   trailing: CircleAvatar(

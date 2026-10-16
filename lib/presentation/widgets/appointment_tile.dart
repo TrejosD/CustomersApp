@@ -1,5 +1,6 @@
 import 'package:clientes_app/config/tools/human_formats.dart';
 import 'package:clientes_app/domain/entities/space_time_entity.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class AppointmentTile extends StatelessWidget {
@@ -33,7 +34,7 @@ class AppointmentTile extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8)),
               padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               child: Text(
-                sloth.isAvailable ? 'Click para agendar' : 'No disponible',
+                sloth.isAvailable ? 'clickToSetAppointment'.tr() : 'notAvailable'.tr(),
                 style: TextStyle(fontSize: 18),
               )),
           SizedBox(

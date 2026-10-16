@@ -1,5 +1,6 @@
 import 'package:clientes_app/features/auth/presentations/providers/index.dart';
 import 'package:clientes_app/features/shared/widgets/index.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -37,7 +38,7 @@ class RegisterScreen extends StatelessWidget {
                   flex: 1,
                 ),
                 Text(
-                  'Crear Cuenta',
+                  'createAccount'.tr(),
                   style: textStyles.titleLarge?.copyWith(color: Colors.white),
                 ),
                 Spacer(
@@ -80,14 +81,14 @@ class _RegisterForm extends ConsumerWidget {
             flex: 2,
           ),
           Text(
-            'Nueva Cuenta',
+            'newAccount'.tr(),
             style: textStyles.titleMedium,
           ),
           const SizedBox(
             height: 30,
           ),
           CustomTextFormField(
-            label: 'Nombre Completo',
+            label: 'fullName'.tr(),
             onChanged:
                 ref.read(loginFormProvider.notifier).onNameRegisterChange,
             keyboardType: TextInputType.emailAddress,
@@ -98,7 +99,7 @@ class _RegisterForm extends ConsumerWidget {
             height: size.height * 0.035,
           ),
           CustomTextFormField(
-            label: 'Correo',
+            label: 'email'.tr(),
             onChanged: ref.read(loginFormProvider.notifier).onEmailChange,
             keyboardType: TextInputType.emailAddress,
             errorMessage:
@@ -108,7 +109,7 @@ class _RegisterForm extends ConsumerWidget {
             height: 30,
           ),
           CustomTextFormField(
-            label: 'Contraseña',
+            label: 'password'.tr(),
             obscureText: true,
             onChanged: ref.read(loginFormProvider.notifier).onPasswordChange,
             errorMessage:
@@ -119,7 +120,7 @@ class _RegisterForm extends ConsumerWidget {
           ),
           CustomTextFormField(
             controller: passwordController,
-            label: 'Repita la contraseña',
+            label: 'passwordReply'.tr(),
             obscureText: true,
             onChanged: ref.read(loginFormProvider.notifier).onPasswordConfirmed,
             onFieldSummitted: (_) {
@@ -136,7 +137,7 @@ class _RegisterForm extends ConsumerWidget {
             width: double.infinity,
             height: 60,
             child: CustomFilledButton(
-              text: 'Crear',
+              text: 'create'.tr(),
               buttonColor: Colors.black,
               onPressed: loginForm.isPosting
                   ? null
@@ -149,7 +150,7 @@ class _RegisterForm extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('¿Ya tienes cuenta?'),
+              Text('alreadyHaveAccount'.tr()),
               TextButton(
                   onPressed: () {
                     if (context.canPop()) {
@@ -157,7 +158,7 @@ class _RegisterForm extends ConsumerWidget {
                     }
                     context.go('/login');
                   },
-                  child: Text('Ingresa aquí'))
+                  child: Text('loginHere'.tr()))
             ],
           ),
           Spacer(

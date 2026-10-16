@@ -2,15 +2,18 @@
 // si algo asi como entrar a DIDI, que lo primero son los restaurates.
 // todo buscar como cambiar un screen de home de manera dinamica
 import 'package:clientes_app/domain/entities/bussiness_entity.dart';
+import 'package:clientes_app/features/shared/infrastructure/services/key_value_storage_service_impl.dart';
 import 'package:clientes_app/presentation/providers/bussiness_list_provider.dart';
 import 'package:clientes_app/presentation/providers/current_user_appointment_provider.dart';
 import 'package:clientes_app/presentation/providers/logged_user_id_provider.dart';
 import 'package:clientes_app/presentation/widgets/bussiness_card.dart';
 import 'package:clientes_app/presentation/widgets/side_option_tile.dart';
 import 'package:clientes_app/presentation/widgets/user_appointment_card.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:restart_app/restart_app.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -50,28 +53,39 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget build(BuildContext context) {
     term = controller.text;
     final appointmentList = ref.watch(currentUserAppointmentProvider);
+    final prefs = KeyValueStorageServiceImpl.prefs;
     AsyncValue<List<Bussiness>> bussinessList = ref.watch(
       bussinessListProvider(term),
     );
     final userState = ref.watch(userIdProvider);
-    /*Posible layout
-    buscador bar en el appbar
-    cita activa ? Card : Empty SizedBox()
-    X...
-    negociosFav - ListViewBuilder los negocios favoritos, deberian venir de la misma info. El Api me envia todos los negocios, yo filtro, cuales son fav y cual no, y hago 2 lista, y las muestro
-    XXX
-    XXX
-    promociones de negocios
-    XXX
-    negocios - ListViewBuilder
-    XXX
-    XXX
-    add
-    XXX
-    XXX
-    add
-    XXX
-     */
+
+    final localeList = [
+      {'value': 'auto', 'label': 'Auto'},
+      {'value': 'en', 'label': 'Ingles'},
+      {'value': 'es', 'label': 'Español'},
+      {'value': 'de', 'label': 'Aleman'},
+      {'value': 'pt', 'label': 'Portuges'},
+    ];
+    final savedLocale = prefs.getString('locale');
+    String? getLocaleLabel(savedLocale) {
+      if (savedLocale != '' && savedLocale != null) {
+        final match = localeList.firstWhere(
+          (item) => item['value'] == savedLocale,
+        );
+        return match['label'];
+      }
+      return null;
+    }
+
+    void onLanguajeSelected(locale) async {
+      if (locale == 'Automatico') {
+        await prefs.remove('locale');
+        Restart.restartApp();
+      } else {
+        await prefs.setString('locale', locale.toString());
+        Restart.restartApp();
+      }
+    }
 
     final border = OutlineInputBorder(
       borderSide: const BorderSide(color: Colors.transparent),
@@ -79,8 +93,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
 
     const borderRadius = Radius.circular(15);
-
-    final List<String> listaValue = ['Dark', 'Light', 'Negro', 'Juan'];
 
     return Scaffold(
       appBar: AppBar(
@@ -119,7 +131,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 borderSide: BorderSide(color: Colors.red.shade800),
               ),
               isDense: true,
-              hintText: 'Buscar Nombre o Descripción',
+              hintText: 'searchNameDescription'.tr(),
             ),
             controller: controller,
             onFieldSubmitted: (value) => submitBussinessSearch(value),
@@ -163,6 +175,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
             ),
             Divider(),
+            // todo Archivo de traduccion Drawer
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
               child: Column(
@@ -176,11 +189,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   ),
                   SideOptionTile(
                     textStyle: TextStyle(fontSize: 18),
-                    initialSelection: 'Dark',
-                    dropDownMenuExtries: listaValue,
-                    title: 'Estilo',
+                    hintText: getLocaleLabel(savedLocale) ?? 'Auto',
+                    initialSelection:
+                        getLocaleLabel(savedLocale) ?? 'Automatico',
+                    dropDownMenuExtries: localeList,
+                    title: 'Lenguaje',
                     icon: Icons.language,
-                    onSelected: () {},
+                    onSelected: (locale) async => onLanguajeSelected(locale),
                   ),
                 ],
               ),

@@ -3,6 +3,7 @@ import 'package:clientes_app/domain/entities/appointment_entity.dart';
 import 'package:clientes_app/presentation/providers/appointment_repository_provider.dart';
 import 'package:clientes_app/presentation/providers/bussiness_repository_provider.dart';
 import 'package:clientes_app/presentation/providers/current_user_appointment_provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -26,18 +27,18 @@ class UserAppointmentCard extends ConsumerWidget {
                 width: 10,
               ),
               Text(
-                'Cancelación de Cita',
+                'cancelAppointment'.tr(),
                 style: TextStyle(fontWeight: FontWeight.bold),
               )
             ],
           ),
           content: Text(
-            'Seguro de cancelar esta cita?',
+            'ensureCancelation'.tr(),
             style: TextStyle(fontSize: 18),
           ),
           actions: [
             TextButton(
-                onPressed: () => context.pop(), child: const Text('Cancelar')),
+                onPressed: () => context.pop(), child: Text('cancel'.tr())),
             IconButton.filledTonal(
                 onPressed: () async {
                   await ref
@@ -46,8 +47,8 @@ class UserAppointmentCard extends ConsumerWidget {
                   ref.invalidate(currentUserAppointmentProvider);
                   context.pop();
                 },
-                icon: const Text(
-                  'Aceptar',
+                icon: Text(
+                  'accept'.tr(),
                   style: TextStyle(color: Colors.green),
                 ))
           ],

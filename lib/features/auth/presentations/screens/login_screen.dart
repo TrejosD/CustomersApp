@@ -97,7 +97,7 @@ class _LoginForm extends ConsumerWidget {
             width: double.infinity,
             height: 56,
             child: CustomFilledButton(
-              text: 'accept'.tr(),
+              text: 'login'.tr(),
               buttonColor: Colors.black87,
               onPressed: loginForm.isPosting
                   ? null
@@ -115,7 +115,7 @@ class _LoginForm extends ConsumerWidget {
                   onPressed: () {
                     context.push('/register');
                   },
-                  child: Text('singin'.tr()))
+                  child: Text('signinHere'.tr()))
             ],
           ),
           const Spacer(

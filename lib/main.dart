@@ -1,17 +1,32 @@
 import 'package:clientes_app/config/router/app_router.dart';
 import 'package:clientes_app/config/tools/human_formats.dart';
+import 'package:clientes_app/features/shared/infrastructure/services/key_value_storage_service_impl.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await KeyValueStorageServiceImpl.getSharedPreferences();
   HumanFormats.initLocale();
-
-  runApp(EasyLocalization(supportedLocales: [Locale('en', 'US'), Locale('es', 'ES'), Locale('de', 'DE')],fallbackLocale: Locale('en') , path: 'assets/translations', child: const ProviderScope(child: MyApp()),) );
-
-
+  final prefs = KeyValueStorageServiceImpl();
+  //todo me esta dando problemas, esta linea
+  final String? savedLocale = await prefs.getKeyValue<String>('locale');
+  runApp(
+    EasyLocalization(
+      supportedLocales: [
+        Locale('en', 'US'),
+        Locale('es', 'ES'),
+        Locale('pt', 'BR'),
+        Locale('de', 'DE'),
+      ],
+      fallbackLocale: Locale('en', 'US'),
+      path: 'assets/translations',
+      startLocale: savedLocale != null ? Locale(savedLocale) : null,
+      child: const ProviderScope(child: MyApp()),
+    ),
+  );
 }
 
 class MyApp extends ConsumerWidget {
