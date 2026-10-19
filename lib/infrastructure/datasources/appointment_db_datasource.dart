@@ -8,34 +8,34 @@ import 'package:clientes_app/infrastructure/models/appointment_api/appointmentdb
 import 'package:dio/dio.dart';
 
 class AppointmentDbDatasource extends AppointmentDataSource {
-  final dio = Dio(BaseOptions(
-      baseUrl: 'https://appointmentservice-kl4u.onrender.com/citas'));
-  @override
-  Future<List<Appointment>> getAllAppointments() {
-    // TODO: implement getAllAppointments
-    throw UnimplementedError();
-  }
+  final dio = Dio(
+    BaseOptions(baseUrl: 'https://appointmentservice-kl4u.onrender.com/citas'),
+  );
 
-// este metodo envia los datos para agendar un espacio, retorna el espacio agendado
+  // este metodo envia los datos para agendar un espacio, retorna el espacio agendado
   @override
   Future<List<SpaceTimeEntity>> setAppointment(
-      String id,
-      String bussinessID,
-      String customerID,
-      String productID,
-      DateTime dayDate,
-      DateTime startTime,
-      String slothID) async {
+    String id,
+    String bussinessID,
+    String customerID,
+    String productID,
+    DateTime dayDate,
+    DateTime startTime,
+    String slothID,
+  ) async {
     // todo la respuesta la manejo aca
     // response = Response ({"message":"Espacio para cita no disponible - check logs","error":"Bad Request","statusCode":400})
-    final response = await dio.post('/appointment/$id', data: {
-      'bussinessID': bussinessID,
-      'customerID': customerID,
-      'productID': productID,
-      'dayDate': dayDate.toIso8601String(),
-      'startTime': startTime.toIso8601String(),
-      'slothID': slothID
-    });
+    final response = await dio.post(
+      '/appointment/$id',
+      data: {
+        'bussinessID': bussinessID,
+        'customerID': customerID,
+        'productID': productID,
+        'dayDate': dayDate.toIso8601String(),
+        'startTime': startTime.toIso8601String(),
+        'slothID': slothID,
+      },
+    );
     final appointmentResponse = (response.data as List)
         .map((json) => AppointmentResponse.fromJson(json))
         .toList();

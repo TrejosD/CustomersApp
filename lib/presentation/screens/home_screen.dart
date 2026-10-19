@@ -1,7 +1,6 @@
-// home deberia ser, donde se encutran los negocios. 0 el screen de favoritos.
-// si algo asi como entrar a DIDI, que lo primero son los restaurates.
-// todo buscar como cambiar un screen de home de manera dinamica
 import 'package:clientes_app/domain/entities/bussiness_entity.dart';
+import 'package:clientes_app/features/deviceInfo/device_data.dart';
+import 'package:clientes_app/features/notifications/notification_service.dart';
 import 'package:clientes_app/features/shared/infrastructure/services/key_value_storage_service_impl.dart';
 import 'package:clientes_app/presentation/providers/bussiness_list_provider.dart';
 import 'package:clientes_app/presentation/providers/current_user_appointment_provider.dart';
@@ -43,6 +42,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     ref.invalidate(bussinessListProvider);
   }
 
+  final notificationService = NotificationService();
+
+  Future<void> initializeNotificationService(
+    String id,
+    String deviceId,
+    String platform,
+  ) async {
+    await notificationService.initializeAndGetToken(id, deviceId, platform);
+  }
+
   void clearBussinessSearch() {
     if (controller.text == '') {
       submitBussinessSearch('');
@@ -58,6 +67,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       bussinessListProvider(term),
     );
     final userState = ref.watch(userIdProvider);
+    final deviceState = ref.watch(deviceDataProvider);
+    if (userState.id.length > 1) {
+      initializeNotificationService(
+        userState.id,
+        deviceState.deviceId,
+        deviceState.platform,
+      );
+    }
 
     final localeList = [
       {'value': 'auto', 'label': 'Auto'},

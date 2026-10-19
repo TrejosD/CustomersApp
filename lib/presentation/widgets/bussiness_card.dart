@@ -1,5 +1,6 @@
 import 'package:clientes_app/domain/entities/bussiness_entity.dart';
 import 'package:clientes_app/presentation/providers/shedule_days_map_provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -39,16 +40,20 @@ class BussinessCard extends ConsumerWidget {
               height: 124,
               width: 140,
               decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 136, 149, 152),
-                  borderRadius: BorderRadius.circular(8),
-                  border: BoxBorder.all()),
+                color: const Color.fromARGB(255, 136, 149, 152),
+                borderRadius: BorderRadius.circular(8),
+                border: BoxBorder.all(),
+              ),
               padding: EdgeInsets.all(12),
               child: Center(
-                  child: Text(
-                buss.name,
-                style:
-                    TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-              )),
+                child: Text(
+                  buss.name,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
             ),
             Spacer(),
             Column(
@@ -57,22 +62,26 @@ class BussinessCard extends ConsumerWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(setDaysRange(buss.schedule.days),
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold)),
-                    SizedBox(
-                      width: 12,
-                    ),
                     Text(
-                      '${buss.schedule.startYourney.toString()}: am - ${buss.schedule.endYourney.toString()}: pm',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      setDaysRange(buss.schedule.days),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(width: 12),
+                    Text(
+                      '${buss.schedule.startYourney.toString()} : am - ${buss.schedule.endYourney.toString()} : pm',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
-                Text('Servicios: '),
+                Text('busCardServices'.tr()),
                 SizedBox(
-                  height: 24,
+                  height: 20,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     physics: NeverScrollableScrollPhysics(),
@@ -87,10 +96,24 @@ class BussinessCard extends ConsumerWidget {
                     },
                   ),
                 ),
-                Text(buss.address)
+                Text(buss.address),
+                Row(
+                  children: [
+                    buss.starsRate == 5.0
+                        ? Icon(
+                            Icons.star_outline,
+                            color: Colors.yellow.shade800,
+                          )
+                        : Icon(
+                            Icons.star_half_outlined,
+                            color: Colors.yellow.shade800,
+                          ),
+                    Text(buss.starsRate.toString()),
+                  ],
+                ),
               ],
             ),
-            Spacer()
+            Spacer(),
           ],
         ),
       ),

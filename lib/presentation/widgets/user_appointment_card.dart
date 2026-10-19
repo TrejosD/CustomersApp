@@ -19,17 +19,14 @@ class UserAppointmentCard extends ConsumerWidget {
         return AlertDialog(
           title: Row(
             children: [
-              Icon(
-                Icons.warning_amber_rounded,
-                color: Colors.orange,
+              Icon(Icons.warning_amber_rounded, color: Colors.orange),
+              SizedBox(width: 10),
+              Flexible(
+                child: Text(
+                  'cancelAppointment'.tr(),
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
-              SizedBox(
-                width: 10,
-              ),
-              Text(
-                'cancelAppointment'.tr(),
-                style: TextStyle(fontWeight: FontWeight.bold),
-              )
             ],
           ),
           content: Text(
@@ -38,19 +35,19 @@ class UserAppointmentCard extends ConsumerWidget {
           ),
           actions: [
             TextButton(
-                onPressed: () => context.pop(), child: Text('cancel'.tr())),
+              onPressed: () => context.pop(),
+              child: Text('cancel'.tr()),
+            ),
             IconButton.filledTonal(
-                onPressed: () async {
-                  await ref
-                      .read(appointmentRepositoryProvider)
-                      .freeAppointmentSpace(app.id!);
-                  ref.invalidate(currentUserAppointmentProvider);
-                  context.pop();
-                },
-                icon: Text(
-                  'accept'.tr(),
-                  style: TextStyle(color: Colors.green),
-                ))
+              onPressed: () async {
+                await ref
+                    .read(appointmentRepositoryProvider)
+                    .freeAppointmentSpace(app.id!);
+                ref.invalidate(currentUserAppointmentProvider);
+                context.pop();
+              },
+              icon: Text('accept'.tr(), style: TextStyle(color: Colors.green)),
+            ),
           ],
         );
       },
@@ -59,8 +56,10 @@ class UserAppointmentCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final TextStyle style =
-        TextStyle(color: Colors.white, fontWeight: FontWeight.bold);
+    final TextStyle style = TextStyle(
+      color: Colors.white,
+      fontWeight: FontWeight.bold,
+    );
     final buss = ref
         .read(bussinessRepositoryProvider)
         .getBussinessByID(app.bussinessID!);
@@ -73,8 +72,9 @@ class UserAppointmentCard extends ConsumerWidget {
         if (snapshot.hasData && snapshot.data != null) {
           final bussiness = snapshot.data!;
           final products = bussiness.products;
-          final product = products
-              .firstWhere((prdtc) => prdtc.id.toString() == app.productID);
+          final product = products.firstWhere(
+            (prdtc) => prdtc.id.toString() == app.productID,
+          );
           return Card(
             color: Colors.black,
             child: Padding(
@@ -82,41 +82,31 @@ class UserAppointmentCard extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(children: [
-                    Text(
-                      bussiness.name,
-                      style: style,
-                    ),
-                    Spacer(),
-                    IconButton(
+                  Row(
+                    children: [
+                      Text(bussiness.name, style: style),
+                      Spacer(),
+                      IconButton(
                         onPressed: () {
                           showConfirmationAlert(context, ref);
                         },
                         icon: Icon(
                           Icons.delete_forever_outlined,
                           color: Colors.white,
-                        ))
-                  ]),
+                        ),
+                      ),
+                    ],
+                  ),
                   Row(
                     children: [
                       Text(
                         HumanFormats.timeHumanFormat(app.startTime.toString()),
                         style: style,
                       ),
-                      SizedBox(
-                        width: 6,
-                      ),
-                      Text(
-                        '--',
-                        style: style,
-                      ),
-                      SizedBox(
-                        width: 4,
-                      ),
-                      Text(
-                        product.name,
-                        style: style,
-                      )
+                      SizedBox(width: 6),
+                      Text('--', style: style),
+                      SizedBox(width: 4),
+                      Text(product.name, style: style),
                     ],
                   ),
                 ],

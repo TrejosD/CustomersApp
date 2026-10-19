@@ -31,8 +31,11 @@ environment:
 dependencies:
   build_runner: ^2.15.2
   cupertino_icons: ^1.0.8
+  device_info_plus: ^13.3.0
   dio: ^5.11.0
   easy_localization: ^3.0.8
+  firebase_core: ^5.0.0
+  firebase_messaging: ^17.0.0
   flutter:
     sdk: flutter
   flutter_riverpod: ^3.3.2

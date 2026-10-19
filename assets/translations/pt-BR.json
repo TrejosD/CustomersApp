@@ -33,6 +33,16 @@
     "understandMessage":"Concordo",
     "everythingOk":"Correu tudo bem!",
     "cancelAppointment":"Cancelamento de marcação",
-    "ensureCancelation":"Tem a certeza de que quer cancelar esta marcação?"
+    "ensureCancelation":"Tem a certeza de que quer cancelar esta marcação?",
+    "busCardServices":"Serviços: ",
+    "daysLabelList":{
+        "1":"2a",
+        "2":"3a",
+        "3":"4a",
+        "4":"5a",
+        "5":"6a",
+        "6":"Sab",
+        "7":"Dom"
+    }
 
 }

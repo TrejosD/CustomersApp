@@ -1,6 +1,5 @@
 import 'package:clientes_app/domain/datasources/appointment_data_source.dart';
 import 'package:clientes_app/domain/entities/appointment_entity.dart';
-import 'package:clientes_app/domain/entities/availability_entity.dart';
 import 'package:clientes_app/domain/entities/space_time_entity.dart';
 import 'package:clientes_app/domain/repositories/appointment_repository.dart';
 
@@ -9,22 +8,24 @@ class AppointmentRepositoryImpl extends AppointmentRepository {
   AppointmentRepositoryImpl({required this.appointmentDataSource});
 
   @override
-  Future<List<Availability>> getAllAppointments() {
-    // TODO: implement getAllAppointments
-    throw UnimplementedError();
-  }
-
-  @override
   Future<List<SpaceTimeEntity>> setAppointment(
-      String id,
-      String bussinessID,
-      String customerID,
-      String productID,
-      DateTime dayDate,
-      DateTime startTime,
-      String slothID) {
+    String id,
+    String bussinessID,
+    String customerID,
+    String productID,
+    DateTime dayDate,
+    DateTime startTime,
+    String slothID,
+  ) {
     return appointmentDataSource.setAppointment(
-        id, bussinessID, customerID, productID, dayDate, startTime, slothID);
+      id,
+      bussinessID,
+      customerID,
+      productID,
+      dayDate,
+      startTime,
+      slothID,
+    );
   }
 
   @override

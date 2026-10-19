@@ -22,24 +22,28 @@ class AppointmentTile extends StatelessWidget {
               Text(
                 HumanFormats.timeHumanFormat(sloth.endTime.toString()),
                 style: TextStyle(fontSize: 15),
-              )
+              ),
             ],
           ),
           Spacer(),
           Container(
-              decoration: BoxDecoration(
-                  color: sloth.isAvailable
-                      ? Colors.grey.shade50
-                      : Colors.redAccent.shade100,
-                  borderRadius: BorderRadius.circular(8)),
-              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              child: Text(
-                sloth.isAvailable ? 'clickToSetAppointment'.tr() : 'notAvailable'.tr(),
-                style: TextStyle(fontSize: 18),
-              )),
-          SizedBox(
-            width: 44,
-          )
+            constraints: BoxConstraints(maxHeight: 110, maxWidth: 238),
+            decoration: BoxDecoration(
+              color: sloth.isAvailable
+                  ? Colors.grey.shade50
+                  : Colors.redAccent.shade100,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            child: Text(
+              sloth.isAvailable
+                  ? 'clickToSetAppointment'.tr()
+                  : 'notAvailable'.tr(),
+              style: TextStyle(fontSize: 18),
+            ),
+          ),
+          SizedBox(width: 12),
+          Spacer(),
         ],
       ),
       subtitle: Divider(),
