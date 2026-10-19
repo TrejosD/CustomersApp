@@ -78,10 +78,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     final localeList = [
       {'value': 'auto', 'label': 'Auto'},
-      {'value': 'en', 'label': 'Ingles'},
+      {'value': 'en', 'label': 'English'},
       {'value': 'es', 'label': 'Español'},
-      {'value': 'de', 'label': 'Aleman'},
-      {'value': 'pt', 'label': 'Portuges'},
+      {'value': 'de', 'label': 'Deutsch'},
+      {'value': 'pt', 'label': 'Português'},
+      {'value': 'fr', 'label': 'Français'},
+      {'value': 'it', 'label': 'Italiano'},
+      {'value': 'ja', 'label': '日本語'},
+      {'value': 'ko', 'label': '한국어'},
+      {'value': 'zh', 'label': '简体中文'},
     ];
     final savedLocale = prefs.getString('locale');
     String? getLocaleLabel(savedLocale) {
@@ -172,7 +177,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                    color: const Color.fromARGB(255, 231, 241, 249),
+                    color: const Color.fromARGB(255, 22, 27, 32),
                     offset: Offset(0.1, 0.7),
                     blurRadius: 0.3,
                   ),
@@ -184,10 +189,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 children: [
                   Container(
                     padding: EdgeInsets.all(6),
-                    child: Icon(Icons.contacts, size: 42),
+                    child: CircleAvatar(
+                      radius: 40,
+                      foregroundImage: AssetImage('./assets/img/user.png'),
+                    ),
                   ),
-                  Text(userState.name),
-                  Text(userState.email),
+                  Text(userState.name, style: TextStyle(color: Colors.white)),
+                  Text(userState.email, style: TextStyle(color: Colors.white)),
                 ],
               ),
             ),
@@ -197,20 +205,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Text('Dark Theme'),
-                      Spacer(),
-                      Switch(value: false, onChanged: null),
-                    ],
-                  ),
                   SideOptionTile(
                     textStyle: TextStyle(fontSize: 18),
                     hintText: getLocaleLabel(savedLocale) ?? 'Auto',
                     initialSelection:
                         getLocaleLabel(savedLocale) ?? 'Automatico',
                     dropDownMenuExtries: localeList,
-                    title: 'Lenguaje',
+                    title: 'languageTitle'.tr(),
                     icon: Icons.language,
                     onSelected: (locale) async => onLanguajeSelected(locale),
                   ),

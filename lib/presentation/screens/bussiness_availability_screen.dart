@@ -62,92 +62,115 @@ class _BussinessAvailabilityScreenState
                     final ava = listAvas[index];
                     // aca tenemos el head "tipo AppBar"
                     return Container(
-                        width: screenWidth,
-                        padding: EdgeInsets.symmetric(horizontal: 2),
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ListTile(
-                                  leading: IconButton(onPressed: ()=>context.pop(), icon: Icon(Icons.arrow_back_ios, color: Colors.white,)),
-                                  tileColor:
-                                      const Color.fromARGB(255, 71, 77, 74),
-                                  title: Text(
-                                    bussinessState.buss!.name,
-                                    style: TextStyle(
-                                        fontSize: 19, color: Colors.white),
-                                  ),
-                                  // todo, ver como funciona la variable entre el texto con easyLocation
-                                  subtitle: Text(
-                                    'date: ${HumanFormats.dateHumanFormat(ava.dayDate.toString())}'.tr(),
+                      width: screenWidth,
+                      padding: EdgeInsets.symmetric(horizontal: 2),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ListTile(
+                              leading: IconButton(
+                                onPressed: () => context.pop(),
+                                icon: Icon(
+                                  Icons.arrow_back_ios,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              tileColor: const Color.fromARGB(255, 71, 77, 74),
+                              title: Text(
+                                bussinessState.buss!.name,
+                                style: TextStyle(
+                                  fontSize: 19,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              // todo, ver como funciona la variable entre el texto con easyLocation
+                              subtitle: Row(
+                                children: [
+                                  Text(
+                                    'date'.tr(),
                                     style: TextStyle(color: Colors.white),
                                   ),
-                                  trailing: CircleAvatar(
-                                    radius: 30,
-                                    backgroundColor: Colors.white,
-                                    child: Text(
-                                      HumanFormats.getTextDay(
-                                          ava.dayDate.toString()),
-                                      style: TextStyle(fontSize: 18),
+                                  Text(
+                                    HumanFormats.dateHumanFormat(
+                                      ava.dayDate.toString(),
                                     ),
+                                    style: TextStyle(color: Colors.white),
                                   ),
-                            ),),
-                            Divider(),
-                            Expanded(
-                              child: ListView.builder(
-                                itemCount: ava.spaceTime!.length,
-                                itemBuilder: (context, index) {
-                                  final avaSlot = ava.spaceTime![index];
-                                  return GestureDetector(
-                                    onTap: () async {
-                                      // asi solamente si el espacio esta disponible, abre el Dialog para agendar el espacio
-                                      if (avaSlot.isAvailable) {
-                                        final appointmentService = ref.read(
-                                            appointmentRepositoryProvider);
-                                        final availabilityRepo = ref.read(
-                                            availabilityRepositoryProvider);
-                                        final productList =
-                                            bussinessState.buss!.products;
-                                        await Navigator.of(context)
-                                            .push(MaterialPageRoute(
-                                          builder: (context) =>
-                                              SetAppointmentDialog(
-                                                  productList: productList,
-                                                  bussiness:
-                                                      bussinessState.buss!,
-                                                  userID: userId.id,
-                                                  ava: ava,
-                                                  avaSlots: avaSlot,
-                                                  bussinessID: widget.bussID,
-                                                  appointmentRepo:
-                                                      appointmentService,
-                                                  availabilityRepo:
-                                                      availabilityRepo),
-                                        ));
-                                        if (mounted) {
-                                          setState(() {
-                                            ref.invalidate(
-                                                currentUserAppointmentProvider);
-                                            refreshAvailability(
-                                                availabilityRepo);
-                                          });
-                                        }
-                                      }
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8, vertical: 1),
-                                      child: AppointmentTile(sloth: avaSlot),
-                                    ),
-                                  );
-                                },
+                                ],
+                              ),
+                              trailing: CircleAvatar(
+                                radius: 30,
+                                backgroundColor: Colors.white,
+                                child: Text(
+                                  HumanFormats.getTextDay(
+                                    ava.dayDate.toString(),
+                                  ),
+                                  style: TextStyle(fontSize: 18),
+                                ),
                               ),
                             ),
-                            SizedBox(
-                              height: 10,
-                            )
-                          ],
-                        ));
+                          ),
+                          Divider(),
+                          Expanded(
+                            child: ListView.builder(
+                              itemCount: ava.spaceTime!.length,
+                              itemBuilder: (context, index) {
+                                final avaSlot = ava.spaceTime![index];
+                                return GestureDetector(
+                                  onTap: () async {
+                                    // asi solamente si el espacio esta disponible, abre el Dialog para agendar el espacio
+                                    if (avaSlot.isAvailable) {
+                                      final appointmentService = ref.read(
+                                        appointmentRepositoryProvider,
+                                      );
+                                      final availabilityRepo = ref.read(
+                                        availabilityRepositoryProvider,
+                                      );
+                                      final productList =
+                                          bussinessState.buss!.products;
+                                      await Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              SetAppointmentDialog(
+                                                productList: productList,
+                                                bussiness: bussinessState.buss!,
+                                                userID: userId.id,
+                                                ava: ava,
+                                                avaSlots: avaSlot,
+                                                bussinessID: widget.bussID,
+                                                appointmentRepo:
+                                                    appointmentService,
+                                                availabilityRepo:
+                                                    availabilityRepo,
+                                              ),
+                                        ),
+                                      );
+                                      if (mounted) {
+                                        setState(() {
+                                          ref.invalidate(
+                                            currentUserAppointmentProvider,
+                                          );
+                                          refreshAvailability(availabilityRepo);
+                                        });
+                                      }
+                                    }
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                      vertical: 1,
+                                    ),
+                                    child: AppointmentTile(sloth: avaSlot),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                        ],
+                      ),
+                    );
                   },
                 ),
               );

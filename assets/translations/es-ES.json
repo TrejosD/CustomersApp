@@ -13,7 +13,7 @@
     "alreadyHaveAccount":"¿Ya tienes una cuenta?",
     "loginHere":"Inicia sesión aquí",
     "searchNameDescription":"Busca por Nombre o Descripción",
-    "date":"Fecha",
+    "date":"Fecha: ",
     "clickToSetAppointment":"Toca para agendar",
     "notAvailable":"No disponible",
     "sentAppointmentRequest":"Solicitar Cita",
@@ -35,6 +35,7 @@
     "cancelAppointment":"Cancelación de Cita",
     "ensureCancelation":"¿Estás seguro de cancelar esta cita?",
     "busCardServices":"Servicios: ",
+    "languageTitle":"Lenguaje",
     "daysLabelList":{
         "1":"L",
         "2":"M",

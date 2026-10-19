@@ -13,7 +13,7 @@
     "alreadyHaveAccount":"Already have an account?",
     "loginHere":"Login Here",
     "searchNameDescription":"Search by Name or Description",
-    "date":"Date",
+    "date":"Date: ",
     "clickToSetAppointment":"Tap to set Appointment",
     "notAvailable":"Not Available",
     "sentAppointmentRequest":"Sent appointment request",
@@ -35,6 +35,7 @@
     "cancelAppointment":"Appointment Cancellation",
     "ensureCancelation":"Are you sure, you want to cancel this appointment?",
     "busCardServices":"Services: ",
+    "languageTitle":"Language",
     "daysLabelList":{
         "1":"M",
         "2":"T",
