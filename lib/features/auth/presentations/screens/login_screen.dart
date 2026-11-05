@@ -29,11 +29,11 @@ class LoginScreen extends StatelessWidget {
               height: size.height - 260,
               width: double.infinity,
               decoration: BoxDecoration(
-                  color: scaffoldBackGround,
-                  borderRadius:
-                      BorderRadius.only(topLeft: Radius.circular(100))),
+                color: scaffoldBackGround,
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(100)),
+              ),
               child: _LoginForm(),
-            )
+            ),
           ],
         ),
       ),
@@ -44,8 +44,9 @@ class LoginScreen extends StatelessWidget {
 class _LoginForm extends ConsumerWidget {
   void showSnackBar(BuildContext context, String message) {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   @override
@@ -58,28 +59,21 @@ class _LoginForm extends ConsumerWidget {
 
     final textStyles = Theme.of(context).textTheme;
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 50,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 50),
       child: Column(
         children: [
-          const SizedBox(
-            height: 50,
-          ),
+          const SizedBox(height: 50),
           Text('login'.tr(), style: textStyles.titleLarge),
-          SizedBox(
-            height: 50,
-          ),
+          SizedBox(height: 50),
           CustomTextFormField(
             label: 'email'.tr(),
             keyboardType: TextInputType.emailAddress,
             onChanged: ref.read(loginFormProvider.notifier).onEmailChange,
-            errorMessage:
-                loginForm.isFormPosted ? loginForm.email.errorMessage : null,
+            errorMessage: loginForm.isFormPosted
+                ? loginForm.email.errorMessage
+                : null,
           ),
-          SizedBox(
-            height: 30,
-          ),
+          SizedBox(height: 30),
           CustomTextFormField(
             label: 'password'.tr(),
             obscureText: true,
@@ -87,12 +81,11 @@ class _LoginForm extends ConsumerWidget {
             onFieldSummitted: (_) {
               ref.read(loginFormProvider.notifier).onFormSubmit();
             },
-            errorMessage:
-                loginForm.isFormPosted ? loginForm.password.errorMessage : null,
+            errorMessage: loginForm.isFormPosted
+                ? loginForm.password.errorMessage
+                : null,
           ),
-          const SizedBox(
-            height: 30,
-          ),
+          const SizedBox(height: 30),
           SizedBox(
             width: double.infinity,
             height: 56,
@@ -104,23 +97,19 @@ class _LoginForm extends ConsumerWidget {
                   : ref.read(loginFormProvider.notifier).onFormSubmit,
             ),
           ),
-          const Spacer(
-            flex: 2,
-          ),
+          const Spacer(flex: 2),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('have.account'.tr()),
+              Expanded(child: Text('have.account'.tr())),
               TextButton(
-                  onPressed: () {
-                    context.push('/register');
-                  },
-                  child: Text('signinHere'.tr()))
+                onPressed: () {
+                  context.push('/register');
+                },
+                child: Text('signinHere'.tr()),
+              ),
             ],
           ),
-          const Spacer(
-            flex: 1,
-          )
+          const Spacer(flex: 1),
         ],
       ),
     );

@@ -72,5 +72,13 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<!-- Descripción para la solicitud de ubicación cuando la app está en uso -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need your location to display and filter nearby businesses and appointment services available in your area.</string>
+	<!-- Permiso para Notificaciones Push (Requerido nativamente) -->
+	<key>UIBackgroundModes</key>
+	<array>
+	   <string>remote-notification</string>
+	</array>
 </dict>
 </plist>

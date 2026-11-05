@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
@@ -6,10 +7,12 @@ class HumanFormats {
     initializeDateFormatting('es');
   }
 
-  static String dateHumanFormat(String rawDate) {
+  static String dateHumanFormat(String rawDate, BuildContext context) {
     DateTime date = DateTime.parse(rawDate).toLocal();
 
-    return DateFormat("d 'de' MMMM", 'es').format(date);
+    return DateFormat.MMMMd(
+      Localizations.localeOf(context).toString(),
+    ).format(date);
   }
 
   static String timeHumanFormat(String rawTime) {
@@ -18,14 +21,16 @@ class HumanFormats {
     return DateFormat('h:mm a').format(date);
   }
 
-  static String getTextDay(String rawDate) {
+  static String getTextDay(String rawDate, BuildContext context) {
     DateTime date = DateTime.parse(rawDate).toLocal();
 
-    String day = DateFormat('E', 'es').format(date);
+    String currectLocale = Localizations.localeOf(context).toString();
+
+    String day = DateFormat('E', currectLocale).format(date);
     return day.replaceAll('.', '').toUpperCase();
   }
 
-// todo, estoy tratando de construir un metodo para convertir horas 24h => 12h
+  // todo, estoy tratando de construir un metodo para convertir horas 24h => 12h
   static String set24hTo12h(String time) {
     final DateTime date = DateTime.parse(time);
     return DateFormat.jm().format(date);

@@ -13,7 +13,7 @@ void main() async {
   await KeyValueStorageServiceImpl.getSharedPreferences();
   HumanFormats.initLocale();
   final prefs = KeyValueStorageServiceImpl();
-  //todo me esta dando problemas, esta linea
+
   final String? savedLocale = await prefs.getKeyValue<String>('locale');
   runApp(
     EasyLocalization(
@@ -65,7 +65,7 @@ class MyApp extends ConsumerWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.black45),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.grey),
       ),
     );
   }

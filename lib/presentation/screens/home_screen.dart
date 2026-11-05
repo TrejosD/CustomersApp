@@ -14,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:restart_app/restart_app.dart';
 
+//todo CAMBIAR EL TEXTO DE LOS ERRORES VALIDACION DE FORMULARIOS
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
@@ -200,7 +201,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
             ),
             Divider(),
-            // todo Archivo de traduccion Drawer
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
               child: Column(
@@ -214,6 +214,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     title: 'languageTitle'.tr(),
                     icon: Icons.language,
                     onSelected: (locale) async => onLanguajeSelected(locale),
+                  ),
+                  SizedBox(height: 60),
+                  IconButton.filledTonal(
+                    onPressed: () => context.go('/policy'),
+                    icon: Text('Politica de Privacidad'),
                   ),
                 ],
               ),

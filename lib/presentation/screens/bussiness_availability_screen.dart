@@ -84,7 +84,7 @@ class _BussinessAvailabilityScreenState
                                   color: Colors.white,
                                 ),
                               ),
-                              // todo, ver como funciona la variable entre el texto con easyLocation
+
                               subtitle: Row(
                                 children: [
                                   Text(
@@ -94,6 +94,7 @@ class _BussinessAvailabilityScreenState
                                   Text(
                                     HumanFormats.dateHumanFormat(
                                       ava.dayDate.toString(),
+                                      context,
                                     ),
                                     style: TextStyle(color: Colors.white),
                                   ),
@@ -105,6 +106,7 @@ class _BussinessAvailabilityScreenState
                                 child: Text(
                                   HumanFormats.getTextDay(
                                     ava.dayDate.toString(),
+                                    context,
                                   ),
                                   style: TextStyle(fontSize: 18),
                                 ),

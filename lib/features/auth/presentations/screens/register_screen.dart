@@ -13,53 +13,44 @@ class RegisterScreen extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final scaffoldBackgroudColor = Theme.of(context).scaffoldBackgroundColor;
     final textStyles = Theme.of(context).textTheme;
-    return GestureDetector(
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Scaffold(
-        body: ListView(
-          children: [
-            SizedBox(
-              height: size.height * 0.1,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                IconButton(
-                    onPressed: () {
-                      if (!context.canPop()) return;
-                      context.pop();
-                    },
-                    icon: Icon(
-                      Icons.arrow_back_rounded,
-                      size: 40,
-                      color: Colors.white,
-                    )),
-                Spacer(
-                  flex: 1,
+    return Scaffold(
+      body: ListView(
+        children: [
+          SizedBox(height: size.height * 0.1),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              IconButton(
+                onPressed: () {
+                  if (!context.canPop()) return;
+                  context.pop();
+                },
+                icon: Icon(
+                  Icons.arrow_back_rounded,
+                  size: 40,
+                  color: Colors.black,
                 ),
-                Text(
-                  'createAccount'.tr(),
-                  style: textStyles.titleLarge?.copyWith(color: Colors.white),
-                ),
-                Spacer(
-                  flex: 2,
-                ),
-              ],
+              ),
+              Spacer(flex: 1),
+              Text(
+                'createAccount'.tr(),
+                style: textStyles.titleLarge?.copyWith(color: Colors.black),
+              ),
+              Spacer(flex: 2),
+            ],
+          ),
+          Container(
+            height: size.height - 280,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: scaffoldBackgroudColor,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(100),
+              ),
             ),
-            SizedBox(
-              height: size.height * 0.04,
-            ),
-            Container(
-              height: size.height - 200,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  color: scaffoldBackgroudColor,
-                  borderRadius:
-                      const BorderRadius.only(topLeft: Radius.circular(100))),
-              child: _RegisterForm(),
-            ),
-          ],
-        ),
+            child: _RegisterForm(),
+          ),
+        ],
       ),
     );
   }
@@ -77,47 +68,38 @@ class _RegisterForm extends ConsumerWidget {
       padding: const EdgeInsetsGeometry.symmetric(horizontal: 50),
       child: Column(
         children: [
-          const Spacer(
-            flex: 2,
-          ),
-          Text(
-            'newAccount'.tr(),
-            style: textStyles.titleMedium,
-          ),
-          const SizedBox(
-            height: 30,
-          ),
+          const Spacer(flex: 2),
+          Text('newAccount'.tr(), style: textStyles.titleMedium),
+          const SizedBox(height: 30),
           CustomTextFormField(
             label: 'fullName'.tr(),
-            onChanged:
-                ref.read(loginFormProvider.notifier).onNameRegisterChange,
+            onChanged: ref
+                .read(loginFormProvider.notifier)
+                .onNameRegisterChange,
             keyboardType: TextInputType.emailAddress,
-            errorMessage:
-                loginForm.isFormPosted ? loginForm.name.errorMessage : null,
+            errorMessage: loginForm.isFormPosted
+                ? loginForm.name.errorMessage
+                : null,
           ),
-          SizedBox(
-            height: size.height * 0.035,
-          ),
+          SizedBox(height: size.height * 0.035),
           CustomTextFormField(
             label: 'email'.tr(),
             onChanged: ref.read(loginFormProvider.notifier).onEmailChange,
             keyboardType: TextInputType.emailAddress,
-            errorMessage:
-                loginForm.isFormPosted ? loginForm.email.errorMessage : null,
+            errorMessage: loginForm.isFormPosted
+                ? loginForm.email.errorMessage
+                : null,
           ),
-          SizedBox(
-            height: 30,
-          ),
+          SizedBox(height: 30),
           CustomTextFormField(
             label: 'password'.tr(),
             obscureText: true,
             onChanged: ref.read(loginFormProvider.notifier).onPasswordChange,
-            errorMessage:
-                loginForm.isFormPosted ? loginForm.password.errorMessage : null,
+            errorMessage: loginForm.isFormPosted
+                ? loginForm.password.errorMessage
+                : null,
           ),
-          const SizedBox(
-            height: 30,
-          ),
+          const SizedBox(height: 30),
           CustomTextFormField(
             controller: passwordController,
             label: 'passwordReply'.tr(),
@@ -130,9 +112,7 @@ class _RegisterForm extends ConsumerWidget {
                 ? loginForm.confirmedPassword.errorMessage
                 : null,
           ),
-          const SizedBox(
-            height: 25,
-          ),
+          const SizedBox(height: 25),
           SizedBox(
             width: double.infinity,
             height: 60,
@@ -144,26 +124,22 @@ class _RegisterForm extends ConsumerWidget {
                   : ref.read(loginFormProvider.notifier).onRegisterSubmit,
             ),
           ),
-          Spacer(
-            flex: 2,
-          ),
+          Spacer(flex: 2),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('alreadyHaveAccount'.tr()),
+              Expanded(child: Text('alreadyHaveAccount'.tr())),
               TextButton(
-                  onPressed: () {
-                    if (context.canPop()) {
-                      return context.pop();
-                    }
-                    context.go('/login');
-                  },
-                  child: Text('loginHere'.tr()))
+                onPressed: () {
+                  if (context.canPop()) {
+                    return context.pop();
+                  }
+                  context.go('/login');
+                },
+                child: Text('loginHere'.tr()),
+              ),
             ],
           ),
-          Spacer(
-            flex: 1,
-          )
+          Spacer(flex: 1),
         ],
       ),
     );
